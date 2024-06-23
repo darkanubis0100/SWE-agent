@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.25">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.27">
     
     
       
@@ -209,7 +209,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
@@ -907,6 +907,8 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
       
         
       
+        
+      
     
     
     
@@ -1010,6 +1012,27 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
   
   <span class="md-ellipsis">
     Environment variables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../config/docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker images
   </span>
   
 
@@ -1266,6 +1289,26 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1382,6 +1425,10 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>run.py<span class="w"> </span>--model_name<span class="w"> </span>gpt4<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--instance_filter<span class="w"> </span>marshmallow-code__marshmallow-1359
 </code></pre></div></p>
+<p>The above examples use the default value of <code>--data_path</code> (<code>princeton-nlp/SWE-bench_Lite</code>, which will be looked up from huggingface).
+You can specify any other huggingface datasets as well, or supply the path to a pre-downloaded dataset.
+By default, SWE-agent evaluates on the <code>dev</code> split of that dataset.
+You can change that by supplying the <code>--split</code> argument to the above commands (obviously you shouldn't tune your model on the <code>test</code> dataset).</p>
 <h2 id="evaluation">🧪 Evaluation <a name="evaluation"></a></h2>
 <p>The <code>evaluation/</code> folder provides SWE-agent compatible scripts for running <a href="https://github.com/princeton-nlp/SWE-bench/blob/main/tutorials/evaluation.md">SWE-bench style evaluation</a> on model patch predictions. In addition, we also include additional scripts to quantify model performance on "subtasks" within the SWE-bench task, such as identifying the right file(s) to edit.</p>
 <h3 id="quick-start">🐇 Quick Start <a name="quick"></a></h3>
@@ -1559,7 +1606,7 @@ Reference<span class="w"> </span>Report:
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "content.action.edit", "navigation.footer", "content.code.copy", "content.footnote.tooltips", "header.autohide", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.081f42fc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ad660dcc.min.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});

@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.25">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.27">
     
     
       
@@ -209,7 +209,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
@@ -814,6 +814,8 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
       
         
       
+        
+      
     
     
     
@@ -917,6 +919,27 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
   
   <span class="md-ellipsis">
     Environment variables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../config/docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker images
   </span>
   
 
@@ -1416,6 +1439,26 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1705,7 +1748,10 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 
               <details class="quote">
                 <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">242</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
 <span class="normal">243</span>
 <span class="normal">244</span>
 <span class="normal">245</span>
@@ -2322,7 +2368,10 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 <span class="normal">856</span>
 <span class="normal">857</span>
 <span class="normal">858</span>
-<span class="normal">859</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Agent</span><span class="p">:</span>
+<span class="normal">859</span>
+<span class="normal">860</span>
+<span class="normal">861</span>
+<span class="normal">862</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Agent</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Agent handles the behaviour of the model and how it interacts with the environment.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">AgentArguments</span><span class="p">):</span>
@@ -2339,6 +2388,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
         <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_container_id</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">:</span> <span class="n">AgentHook</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add hook to agent&quot;&quot;&quot;</span>
@@ -2351,13 +2401,18 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
         <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance_args</span><span class="p">,</span> <span class="n">init_model_stats</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup the agent for a new instance.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup the agent for a new instance. This includes</span>
+<span class="sd">        formatting the system message and adding demonstrations to the history.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            instance_args: Arguments for the instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>  <span class="c1"># mypy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">reset_stats</span><span class="p">(</span><span class="n">init_model_stats</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">instance_args</span> <span class="o">=</span> <span class="n">instance_args</span>
 
         <span class="n">system_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">system_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">system_args</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SYSTEM (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">system_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SYSTEM (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">system_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_append_history</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">system_msg</span><span class="p">,</span> <span class="s2">&quot;agent&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">})</span>
@@ -2369,7 +2424,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
                 <span class="c1"># Load history</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DEMONSTRATION: </span><span class="si">{</span><span class="n">demonstration_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DEMONSTRATION: </span><span class="si">{</span><span class="n">demonstration_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="n">demo_history</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">demonstration_path</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())[</span><span class="s2">&quot;history&quot;</span><span class="p">]</span>
                 <span class="n">demo_history</span> <span class="o">=</span> <span class="p">[</span>
                     <span class="n">entry</span>
@@ -2379,7 +2434,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">put_demos_in_history</span><span class="p">:</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">demonstration_template</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Demonstration template is ignored for put_demos_in_history=True&quot;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Demonstration template is ignored for put_demos_in_history=True&quot;</span><span class="p">)</span>
                     <span class="c1"># Add demonstration to history directly as separate messages</span>
                     <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">demo_history</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;system&quot;</span><span class="p">:</span>
@@ -2422,7 +2477,6 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
             <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="n">info</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="n">log_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">log_dict</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved trajectory to </span><span class="si">{</span><span class="n">log_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_first_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pattern_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the first match of a command pattern in the action string.&quot;&quot;&quot;</span>
@@ -2577,8 +2631,8 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
             <span class="p">},</span>
         <span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💭 THOUGHT (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">thought</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🎬 ACTION (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💭 THOUGHT (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">thought</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🎬 ACTION (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">thought</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">output</span>
 
@@ -2620,7 +2674,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 
         <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🤖 MODEL INPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🤖 MODEL INPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_append_history</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span> <span class="s2">&quot;agent&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">})</span>
 
         <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="p">:</span>
@@ -2631,8 +2685,8 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Ask the model to correct (without committing to persistent history) after a malformatted model output&quot;&quot;&quot;</span>
         <span class="n">format_error_template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">format_error_template</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MALFORMED OUTPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FORMAT ERROR</span><span class="se">\n</span><span class="si">{</span><span class="n">format_error_template</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MALFORMED OUTPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FORMAT ERROR</span><span class="se">\n</span><span class="si">{</span><span class="n">format_error_template</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">temp_history</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_history</span> <span class="o">+</span> <span class="p">[</span>
             <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">output</span><span class="p">,</span> <span class="s2">&quot;agent&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
@@ -2645,8 +2699,8 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
         <span class="n">name</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">blocklist_error_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">blocklist_error_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BLOCKLISTED OUTPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BLOCKLIST ERROR</span><span class="se">\n</span><span class="si">{</span><span class="n">blocklist_error_message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BLOCKLISTED OUTPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BLOCKLIST ERROR</span><span class="se">\n</span><span class="si">{</span><span class="n">blocklist_error_message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">temp_history</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_history</span> <span class="o">+</span> <span class="p">[</span>
             <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">output</span><span class="p">,</span> <span class="s2">&quot;agent&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
@@ -2710,7 +2764,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
                 <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">retry_after_blocklist_fail</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">thought</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">output</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Malformat limit reached: </span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Malformat limit reached: </span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="s2">&quot;Exit due to format error&quot;</span><span class="p">,</span> <span class="s2">&quot;exit_format&quot;</span><span class="p">,</span> <span class="n">output</span>
 
     <span class="k">def</span> <span class="nf">forward_with_error_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
@@ -2727,20 +2781,20 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
         <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
             <span class="k">raise</span>
         <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Runtime error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Runtime error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Exit due to runtime error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;exit_error&quot;</span><span class="p">,</span>
                 <span class="sa">f</span><span class="s2">&quot;exit due to runtime error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="n">ContextWindowExceededError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Context window exceeded&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Context window exceeded&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="s2">&quot;Exit due to context window&quot;</span><span class="p">,</span> <span class="s2">&quot;exit_context&quot;</span><span class="p">,</span> <span class="s2">&quot;Exit due to context window&quot;</span>
         <span class="k">except</span> <span class="n">CostLimitExceededError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cost limit exceeded&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cost limit exceeded&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="s2">&quot;Exit due to cost limit&quot;</span><span class="p">,</span> <span class="s2">&quot;exit_cost&quot;</span><span class="p">,</span> <span class="s2">&quot;Exit due to cost limit&quot;</span>
         <span class="k">except</span> <span class="n">RetryError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Retry error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Retry error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Exit due to retry error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;exit_api&quot;</span><span class="p">,</span>
@@ -2748,7 +2802,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
             <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_format_and_requery</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">init_environment_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init_environment_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">SWEEnv</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_environment_vars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">env_variables</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">set_environment_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">SWEEnv</span><span class="p">,</span> <span class="n">env_variables</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -2769,12 +2823,13 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
         <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
             <span class="k">raise</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Failed to set environment variables&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Failed to set environment variables&quot;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">e</span>
         <span class="n">command_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">command_files</span><span class="p">:</span>
             <span class="n">datum</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-            <span class="n">contents</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">contents</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
             <span class="n">datum</span><span class="p">[</span><span class="s2">&quot;contents&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">contents</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">contents</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#!&quot;</span><span class="p">):</span>
@@ -2871,7 +2926,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="n">env</span><span class="o">.</span><span class="n">container_obj</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_container_id</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initializing agent settings for container </span><span class="si">{</span><span class="n">env</span><span class="o">.</span><span class="n">container_obj</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initializing agent settings for container </span><span class="si">{</span><span class="n">env</span><span class="o">.</span><span class="n">container_obj</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">init_environment_vars</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">last_container_id</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">container_obj</span><span class="o">.</span><span class="n">id</span>
         <span class="c1"># Re-initialize primary</span>
@@ -2884,7 +2939,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
         <span class="n">trajectory</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">traj_log_path</span> <span class="o">=</span> <span class="n">traj_dir</span> <span class="o">/</span> <span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;instance_id&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.traj&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Trajectory will be saved to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">traj_log_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Trajectory will be saved to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">traj_log_path</span><span class="p">)</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="p">:</span>
                 <span class="n">hook</span><span class="o">.</span><span class="n">on_step_start</span><span class="p">()</span>
@@ -2933,7 +2988,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
         <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="p">:</span>
             <span class="n">hook</span><span class="o">.</span><span class="n">on_run_done</span><span class="p">()</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Trajectory saved to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">traj_log_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Trajectory saved to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">traj_log_path</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">return_type</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">info</span>
@@ -3012,10 +3067,10 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">260</span>
-<span class="normal">261</span>
-<span class="normal">262</span>
-<span class="normal">263</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">:</span> <span class="n">AgentHook</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook</span><span class="p">:</span> <span class="n">AgentHook</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add hook to agent&quot;&quot;&quot;</span>
     <span class="n">hook</span><span class="o">.</span><span class="n">on_init</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span>
@@ -3040,10 +3095,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">728</span>
-<span class="normal">729</span>
-<span class="normal">730</span>
-<span class="normal">731</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">731</span>
 <span class="normal">732</span>
 <span class="normal">733</span>
 <span class="normal">734</span>
@@ -3067,7 +3119,10 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 <span class="normal">752</span>
 <span class="normal">753</span>
 <span class="normal">754</span>
-<span class="normal">755</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">call_subroutine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sub_action</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">SWEEnv</span><span class="p">):</span>
+<span class="normal">755</span>
+<span class="normal">756</span>
+<span class="normal">757</span>
+<span class="normal">758</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">call_subroutine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sub_action</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">SWEEnv</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Call subroutine&quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>  <span class="c1"># mypy</span>
     <span class="n">env_vars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_environment_vars</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
@@ -3160,9 +3215,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">586</span>
-<span class="normal">587</span>
-<span class="normal">588</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">588</span>
 <span class="normal">589</span>
 <span class="normal">590</span>
 <span class="normal">591</span>
@@ -3205,7 +3258,9 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 <span class="normal">628</span>
 <span class="normal">629</span>
 <span class="normal">630</span>
-<span class="normal">631</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_format_and_requery</span><span class="p">(</span>
+<span class="normal">631</span>
+<span class="normal">632</span>
+<span class="normal">633</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_format_and_requery</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
@@ -3249,7 +3304,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
             <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">retry_after_blocklist_fail</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">thought</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">output</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Malformat limit reached: </span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Malformat limit reached: </span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="s2">&quot;Exit due to format error&quot;</span><span class="p">,</span> <span class="s2">&quot;exit_format&quot;</span><span class="p">,</span> <span class="n">output</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -3372,9 +3427,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">472</span>
-<span class="normal">473</span>
-<span class="normal">474</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">474</span>
 <span class="normal">475</span>
 <span class="normal">476</span>
 <span class="normal">477</span>
@@ -3400,7 +3453,9 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 <span class="normal">497</span>
 <span class="normal">498</span>
 <span class="normal">499</span>
-<span class="normal">500</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">available_actions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="normal">500</span>
+<span class="normal">501</span>
+<span class="normal">502</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">available_actions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Forwards the model</span>
 
 <span class="sd">    Args:</span>
@@ -3425,8 +3480,8 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
         <span class="p">},</span>
     <span class="p">)</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💭 THOUGHT (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">thought</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🎬 ACTION (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💭 THOUGHT (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">thought</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🎬 ACTION (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">thought</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">output</span>
 </code></pre></div></td></tr></table></div>
@@ -3473,9 +3528,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">502</span>
-<span class="normal">503</span>
-<span class="normal">504</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">504</span>
 <span class="normal">505</span>
 <span class="normal">506</span>
 <span class="normal">507</span>
@@ -3516,7 +3569,9 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 <span class="normal">542</span>
 <span class="normal">543</span>
 <span class="normal">544</span>
-<span class="normal">545</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">forward_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="normal">545</span>
+<span class="normal">546</span>
+<span class="normal">547</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">forward_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Query the model with the current state and observation with the appropriate template.</span>
 
 <span class="sd">    Returns:</span>
@@ -3554,7 +3609,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 
     <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🤖 MODEL INPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🤖 MODEL INPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_append_history</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span> <span class="s2">&quot;agent&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">})</span>
 
     <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="p">:</span>
@@ -3625,9 +3680,7 @@ due to format errors or blocked actions.</p>
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">633</span>
-<span class="normal">634</span>
-<span class="normal">635</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">635</span>
 <span class="normal">636</span>
 <span class="normal">637</span>
 <span class="normal">638</span>
@@ -3658,7 +3711,9 @@ due to format errors or blocked actions.</p>
 <span class="normal">663</span>
 <span class="normal">664</span>
 <span class="normal">665</span>
-<span class="normal">666</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">forward_with_error_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="normal">666</span>
+<span class="normal">667</span>
+<span class="normal">668</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">forward_with_error_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrapper around `self.forward_model` that handles errors and retries</span>
 <span class="sd">    due to format errors or blocked actions.</span>
 
@@ -3672,20 +3727,20 @@ due to format errors or blocked actions.</p>
     <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
         <span class="k">raise</span>
     <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Runtime error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Runtime error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Exit due to runtime error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="s2">&quot;exit_error&quot;</span><span class="p">,</span>
             <span class="sa">f</span><span class="s2">&quot;exit due to runtime error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">except</span> <span class="n">ContextWindowExceededError</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Context window exceeded&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Context window exceeded&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="s2">&quot;Exit due to context window&quot;</span><span class="p">,</span> <span class="s2">&quot;exit_context&quot;</span><span class="p">,</span> <span class="s2">&quot;Exit due to context window&quot;</span>
     <span class="k">except</span> <span class="n">CostLimitExceededError</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cost limit exceeded&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cost limit exceeded&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="s2">&quot;Exit due to cost limit&quot;</span><span class="p">,</span> <span class="s2">&quot;exit_cost&quot;</span><span class="p">,</span> <span class="s2">&quot;Exit due to cost limit&quot;</span>
     <span class="k">except</span> <span class="n">RetryError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Retry error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Retry error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Exit due to retry error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="s2">&quot;exit_api&quot;</span><span class="p">,</span>
@@ -3713,13 +3768,13 @@ due to format errors or blocked actions.</p>
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">720</span>
-<span class="normal">721</span>
-<span class="normal">722</span>
-<span class="normal">723</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">723</span>
 <span class="normal">724</span>
 <span class="normal">725</span>
-<span class="normal">726</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_environment_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">SWEEnv</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="normal">726</span>
+<span class="normal">727</span>
+<span class="normal">728</span>
+<span class="normal">729</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_environment_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">SWEEnv</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get environment variables&quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>  <span class="c1"># mypy</span>
     <span class="n">env_vars</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
@@ -3747,9 +3802,7 @@ due to format errors or blocked actions.</p>
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">560</span>
-<span class="normal">561</span>
-<span class="normal">562</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">562</span>
 <span class="normal">563</span>
 <span class="normal">564</span>
 <span class="normal">565</span>
@@ -3759,13 +3812,15 @@ due to format errors or blocked actions.</p>
 <span class="normal">569</span>
 <span class="normal">570</span>
 <span class="normal">571</span>
-<span class="normal">572</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">retry_after_blocklist_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="normal">572</span>
+<span class="normal">573</span>
+<span class="normal">574</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">retry_after_blocklist_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Ask the model to correct (without committing to persistent history) after a disallowed command&quot;&quot;&quot;</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">blocklist_error_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">blocklist_error_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BLOCKLISTED OUTPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BLOCKLIST ERROR</span><span class="se">\n</span><span class="si">{</span><span class="n">blocklist_error_message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BLOCKLISTED OUTPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BLOCKLIST ERROR</span><span class="se">\n</span><span class="si">{</span><span class="n">blocklist_error_message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="n">temp_history</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_history</span> <span class="o">+</span> <span class="p">[</span>
         <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">output</span><span class="p">,</span> <span class="s2">&quot;agent&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
@@ -3793,9 +3848,7 @@ due to format errors or blocked actions.</p>
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">547</span>
-<span class="normal">548</span>
-<span class="normal">549</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">549</span>
 <span class="normal">550</span>
 <span class="normal">551</span>
 <span class="normal">552</span>
@@ -3804,12 +3857,14 @@ due to format errors or blocked actions.</p>
 <span class="normal">555</span>
 <span class="normal">556</span>
 <span class="normal">557</span>
-<span class="normal">558</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">retry_after_format_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="normal">558</span>
+<span class="normal">559</span>
+<span class="normal">560</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">retry_after_format_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Ask the model to correct (without committing to persistent history) after a malformatted model output&quot;&quot;&quot;</span>
     <span class="n">format_error_template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">format_error_template</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MALFORMED OUTPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FORMAT ERROR</span><span class="se">\n</span><span class="si">{</span><span class="n">format_error_template</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MALFORMED OUTPUT</span><span class="se">\n</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FORMAT ERROR</span><span class="se">\n</span><span class="si">{</span><span class="n">format_error_template</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="n">temp_history</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_history</span> <span class="o">+</span> <span class="p">[</span>
         <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">output</span><span class="p">,</span> <span class="s2">&quot;agent&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
@@ -3970,10 +4025,7 @@ other values are for internal usage with subroutines.</p>
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">757</span>
-<span class="normal">758</span>
-<span class="normal">759</span>
-<span class="normal">760</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">760</span>
 <span class="normal">761</span>
 <span class="normal">762</span>
 <span class="normal">763</span>
@@ -4072,7 +4124,10 @@ other values are for internal usage with subroutines.</p>
 <span class="normal">856</span>
 <span class="normal">857</span>
 <span class="normal">858</span>
-<span class="normal">859</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+<span class="normal">859</span>
+<span class="normal">860</span>
+<span class="normal">861</span>
+<span class="normal">862</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">setup_args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">SWEEnv</span><span class="p">,</span>
@@ -4106,7 +4161,7 @@ other values are for internal usage with subroutines.</p>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
     <span class="k">if</span> <span class="n">env</span><span class="o">.</span><span class="n">container_obj</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_container_id</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initializing agent settings for container </span><span class="si">{</span><span class="n">env</span><span class="o">.</span><span class="n">container_obj</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initializing agent settings for container </span><span class="si">{</span><span class="n">env</span><span class="o">.</span><span class="n">container_obj</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_environment_vars</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_container_id</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">container_obj</span><span class="o">.</span><span class="n">id</span>
     <span class="c1"># Re-initialize primary</span>
@@ -4119,7 +4174,7 @@ other values are for internal usage with subroutines.</p>
     <span class="n">trajectory</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">traj_log_path</span> <span class="o">=</span> <span class="n">traj_dir</span> <span class="o">/</span> <span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;instance_id&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.traj&quot;</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Trajectory will be saved to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">traj_log_path</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Trajectory will be saved to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">traj_log_path</span><span class="p">)</span>
     <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="p">:</span>
             <span class="n">hook</span><span class="o">.</span><span class="n">on_step_start</span><span class="p">()</span>
@@ -4168,7 +4223,7 @@ other values are for internal usage with subroutines.</p>
     <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="p">:</span>
         <span class="n">hook</span><span class="o">.</span><span class="n">on_run_done</span><span class="p">()</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Trajectory saved to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">traj_log_path</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Trajectory saved to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">traj_log_path</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">return_type</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">info</span>
@@ -4196,10 +4251,7 @@ other values are for internal usage with subroutines.</p>
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">331</span>
-<span class="normal">332</span>
-<span class="normal">333</span>
-<span class="normal">334</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">334</span>
 <span class="normal">335</span>
 <span class="normal">336</span>
 <span class="normal">337</span>
@@ -4207,7 +4259,9 @@ other values are for internal usage with subroutines.</p>
 <span class="normal">339</span>
 <span class="normal">340</span>
 <span class="normal">341</span>
-<span class="normal">342</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">save_trajectory</span><span class="p">(</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">save_trajectory</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">log_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">env_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the trajectory&quot;&quot;&quot;</span>
@@ -4218,7 +4272,6 @@ other values are for internal usage with subroutines.</p>
         <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="n">info</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">log_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">log_dict</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved trajectory to </span><span class="si">{</span><span class="n">log_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -4236,11 +4289,42 @@ other values are for internal usage with subroutines.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Setup the agent for a new instance.</p>
+      <p>Setup the agent for a new instance. This includes
+formatting the system message and adding demonstrations to the history.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>instance_args</code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Arguments for the instance</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">270</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
 <span class="normal">271</span>
 <span class="normal">272</span>
 <span class="normal">273</span>
@@ -4289,14 +4373,22 @@ other values are for internal usage with subroutines.</p>
 <span class="normal">316</span>
 <span class="normal">317</span>
 <span class="normal">318</span>
-<span class="normal">319</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance_args</span><span class="p">,</span> <span class="n">init_model_stats</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Setup the agent for a new instance.&quot;&quot;&quot;</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance_args</span><span class="p">,</span> <span class="n">init_model_stats</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Setup the agent for a new instance. This includes</span>
+<span class="sd">    formatting the system message and adding demonstrations to the history.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        instance_args: Arguments for the instance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>  <span class="c1"># mypy</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">reset_stats</span><span class="p">(</span><span class="n">init_model_stats</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">instance_args</span> <span class="o">=</span> <span class="n">instance_args</span>
 
     <span class="n">system_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">system_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">system_args</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SYSTEM (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">system_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SYSTEM (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">system_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_append_history</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">system_msg</span><span class="p">,</span> <span class="s2">&quot;agent&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">})</span>
@@ -4308,7 +4400,7 @@ other values are for internal usage with subroutines.</p>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
             <span class="c1"># Load history</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DEMONSTRATION: </span><span class="si">{</span><span class="n">demonstration_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DEMONSTRATION: </span><span class="si">{</span><span class="n">demonstration_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">demo_history</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">demonstration_path</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())[</span><span class="s2">&quot;history&quot;</span><span class="p">]</span>
             <span class="n">demo_history</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="n">entry</span>
@@ -4318,7 +4410,7 @@ other values are for internal usage with subroutines.</p>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">put_demos_in_history</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">demonstration_template</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Demonstration template is ignored for put_demos_in_history=True&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Demonstration template is ignored for put_demos_in_history=True&quot;</span><span class="p">)</span>
                 <span class="c1"># Add demonstration to history directly as separate messages</span>
                 <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">demo_history</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;system&quot;</span><span class="p">:</span>
@@ -4360,9 +4452,7 @@ other values are for internal usage with subroutines.</p>
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">574</span>
-<span class="normal">575</span>
-<span class="normal">576</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">576</span>
 <span class="normal">577</span>
 <span class="normal">578</span>
 <span class="normal">579</span>
@@ -4370,7 +4460,9 @@ other values are for internal usage with subroutines.</p>
 <span class="normal">581</span>
 <span class="normal">582</span>
 <span class="normal">583</span>
-<span class="normal">584</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">should_block_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="normal">584</span>
+<span class="normal">585</span>
+<span class="normal">586</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">should_block_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the command should be blocked.&quot;&quot;&quot;</span>
     <span class="n">names</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -4402,9 +4494,7 @@ other values are for internal usage with subroutines.</p>
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">403</span>
-<span class="normal">404</span>
-<span class="normal">405</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">405</span>
 <span class="normal">406</span>
 <span class="normal">407</span>
 <span class="normal">408</span>
@@ -4435,7 +4525,9 @@ other values are for internal usage with subroutines.</p>
 <span class="normal">433</span>
 <span class="normal">434</span>
 <span class="normal">435</span>
-<span class="normal">436</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">split_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pattern_type</span><span class="o">=</span><span class="s2">&quot;subroutine&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">split_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pattern_type</span><span class="o">=</span><span class="s2">&quot;subroutine&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Split an action into a list of actions in a greedy manner, each of which is a subroutine call or a single command.&quot;&quot;&quot;</span>
     <span class="n">parsed_action</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">rem_action</span> <span class="o">=</span> <span class="n">action</span>
@@ -4507,7 +4599,10 @@ other values are for internal usage with subroutines.</p>
 
               <details class="quote">
                 <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">174</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
 <span class="normal">175</span>
 <span class="normal">176</span>
 <span class="normal">177</span>
@@ -4527,10 +4622,7 @@ other values are for internal usage with subroutines.</p>
 <span class="normal">191</span>
 <span class="normal">192</span>
 <span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="normal">194</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">AgentArguments</span><span class="p">(</span><span class="n">FlattenedAccess</span><span class="p">,</span> <span class="n">FrozenSerializable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Configure the agent&#39;s behaviour (templates, parse functions, blocklists, ...).&quot;&quot;&quot;</span>
 
@@ -4593,7 +4685,10 @@ other values are for internal usage with subroutines.</p>
 
               <details class="quote">
                 <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">208</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
 <span class="normal">209</span>
 <span class="normal">210</span>
 <span class="normal">211</span>
@@ -4621,10 +4716,7 @@ other values are for internal usage with subroutines.</p>
 <span class="normal">233</span>
 <span class="normal">234</span>
 <span class="normal">235</span>
-<span class="normal">236</span>
-<span class="normal">237</span>
-<span class="normal">238</span>
-<span class="normal">239</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AgentHook</span><span class="p">:</span>
+<span class="normal">236</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AgentHook</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">on_init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 
     <span class="k">def</span> <span class="nf">on_run_start</span><span class="p">(</span>
@@ -4686,8 +4778,8 @@ other values are for internal usage with subroutines.</p>
 
             <details class="quote">
               <summary>Source code in <code>sweagent/agent/agents.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">227</span>
-<span class="normal">228</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">on_model_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">224</span>
+<span class="normal">225</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">on_model_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Actually query the model with the complete history.&quot;&quot;&quot;</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -4800,7 +4892,7 @@ other values are for internal usage with subroutines.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "content.action.edit", "navigation.footer", "content.code.copy", "content.footnote.tooltips", "header.autohide", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.081f42fc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ad660dcc.min.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});

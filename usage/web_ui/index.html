@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.25">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.27">
     
     
       
@@ -209,7 +209,7 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
@@ -749,6 +749,15 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
 </li>
       
         <li class="md-nav__item">
+  <a href="#if-something-doesnt-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      If something doesn't work
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#manually-starting-frontend-and-backend" class="md-nav__link">
     <span class="md-ellipsis">
       Manually starting frontend and backend
@@ -874,6 +883,8 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
       
         
       
+        
+      
     
     
     
@@ -977,6 +988,27 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
   
   <span class="md-ellipsis">
     Environment variables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../config/docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker images
   </span>
   
 
@@ -1233,6 +1265,26 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1263,6 +1315,15 @@ Forked/branched off of SWE-agent? Please use our latest formatting to resolve me
   <a href="#quickstart" class="md-nav__link">
     <span class="md-ellipsis">
       Quickstart
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-something-doesnt-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      If something doesn't work
     </span>
   </a>
   
@@ -1318,7 +1379,20 @@ Running from GitHub codespaces? More tips <a href="../../installation/codespaces
 <p>If you run SWE-agent from the <code>docker-run</code> Docker container, please see <a href="../../installation/docker/">here</a>
 for how to start the web server.</p>
 </div>
-<h2 id="manually-starting-frontend-and-backend">Manually starting frontend and backend</h2>
+<h2 id="if-something-doesnt-work">If something doesn't work <a name="web-ui-debug"></a></h2>
+<p>Please make sure that your port 8000 and 3000 are unoccupied before running the above script.</p>
+<p>Run</p>
+<div class="highlight"><pre><span></span><code>lsof<span class="w"> </span>-i<span class="w"> </span>:8000
+lsof<span class="w"> </span>-i<span class="w"> </span>:3000
+</code></pre></div>
+<p>to identify other programs serving to that port and kill them, then try again.</p>
+<p>If <code>./start_web_ui.sh</code> is running, but you see a warning message about the backend not being connected, either run</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># this should show some python processes</span>
+lsof<span class="w"> </span>-i<span class="w"> </span>:8000
+</code></pre></div>
+<p>or head to <code>localhost:8000</code> (you should see a small dummy page).</p>
+<p>It might also make sense to start the backend frontend manually as explained in the next section.</p>
+<h2 id="manually-starting-frontend-and-backend">Manually starting frontend and backend <a name="manual-web-ui"></a></h2>
 <p>The web UI consists of a frontend written in <a href="https://react.dev/">react</a> (showing the pretty control elements) and a backend written with <a href="https://flask.palletsprojects.com/">flask</a>.
 The <code>./start_web_ui.sh</code> starts both of them in the background.
 However, this might not be best for development and debugging.
@@ -1466,7 +1540,7 @@ See https://nodejs.org/api/errors.html#errors_common_system_errors for more info
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "content.action.edit", "navigation.footer", "content.code.copy", "content.footnote.tooltips", "header.autohide", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.081f42fc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ad660dcc.min.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
