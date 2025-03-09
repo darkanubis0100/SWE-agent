@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.7">
     
     
       
@@ -65,6 +65,16 @@
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-SG2NC1GDRD"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-SG2NC1GDRD",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-SG2NC1GDRD",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
 
     
     
@@ -2102,17 +2112,16 @@ SWE-agent 1.0 is the open source SOTA on SWE-bench lite! <a href="https://swe-ag
 
 
 <h1 id="architecture">Architecture</h1>
-<div class="admonition warning">
-<p class="admonition-title">Out of date</p>
-<p>This page is a bit out of date for SWE-agent 1.0.0. We're working on it!</p>
-</div>
 <p>This page walks you through the general architecture of the SWE-agent package. Want to just run it? Jump ahead to the <a href="../../installation/">installation</a> or <a href="../../usage/">usage</a> sections.</p>
 <p><a class="glightbox" href="../../assets/architecture.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="architecture" src="../../assets/architecture.png" /></a></p>
-<p>The central entry point to SWE-agent is the <code>run.py</code> script (1). It initializes the <a href="../../reference/env/"><code>SWEEnv</code></a> instance (2) that manages the environment. Upon initialization (and by default for every new instance), it starts a docker container together with a shell session (3). This shell session will be kept alive throughout the task. All installation commands and actions from the model will be executed therein.</p>
-<p><code>SWEEnv</code> then installs the dependencies of the repository to which the task instance belongs into a new conda environment (4).</p>
-<p>The second class that is initialized by <code>run.py</code> is the <a href="../../reference/agent/"><code>Agent</code></a> class (5). It can be configured with a yaml file (see <a href="../../config/config/">config</a>). It's most important method is <code>forward()</code> which prompts the model and executes its action.</p>
-<p>To prompt the model, the history (all prompts to the model together with actions and outputs) need to be sent to the LM. In order to make the best use of the context window of the model, the history gets compressed by a <code>HistoryProcessor</code> (7). The model output (8) is then interpreted by the <code>Agent</code> class and executed in the Shell session via <code>SWEEnv</code>.</p>
-<p>The <a href="../aci/">ACI</a> elements are implemented as <a href="../../config/tools/">custom commands</a> (9) that are available to the shell session.</p>
+<p>The central entry point to SWE-agent is the <code>sweagent</code> command line executable (1). It initializes an instance of the <a href="../../reference/env/"><code>SWEEnv</code></a> class (2) that manages the environment.
+With SWE-agent 1.0, this class is now merely a thin wrapper around our <a href="https://swe-rex.com">SWE-ReX</a> package.
+Upon initialization, <code>SWEEnv</code> initializes the SWE-ReX <em>Deployment</em>. The Deployment either starts a local Docker container (4), or it starts the container on a remote system like modal or aws (3).
+Within the container, SWE-ReX starts a shell session (5) that will be used to execute the commands.
+SWE-ReX also installs the <a href="../aci/">ACI</a> elements as <a href="../../config/tools/">custom tools</a> (9) that are available to the shell session.</p>
+<p>The second class that is initialized by is the <a href="../../reference/agent/"><code>Agent</code></a> (6). It can be configured with a yaml file (see <a href="../../config/config/">config</a>). It's most important method is <code>forward()</code> which prompts the model and executes its action.</p>
+<p>To prompt the model, the history (all prompts to the model together with actions and outputs) need to be sent to the LM. In order to make the best use of the context window of the model, the history gets compressed by a <code>HistoryProcessor</code> (7). The model output (8) is then interpreted by the <code>Agent</code> class (in particular, we use a <a href="../../reference/parsers/">parser</a> to extract the action) and executed in the Shell session via <code>SWEEnv</code> (10).</p>
+<p>For this, <code>SWEEnv</code> holds the SWE-ReX deployment class that talks to a server running within the docker container (11).</p>
 
 
 
@@ -2121,6 +2130,8 @@ SWE-agent 1.0 is the open source SOTA on SWE-bench lite! <a href="https://swe-ag
 
 
 
+
+  
 
 
 
@@ -2208,7 +2219,7 @@ SWE-agent 1.0 is the open source SOTA on SWE-bench lite! <a href="https://swe-ag
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.top", "content.action.edit", "navigation.footer", "content.code.copy", "content.footnote.tooltips", "header.autohide", "announce.dismiss", "content.code.annotate", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
       
         <script src="../../assets/js/sh-annotation.js"></script>
       
