@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -2049,18 +2049,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sweagent.environment.swe_env.EnvironmentConfig.name" class="md-nav__link">
+  <a href="#sweagent.environment.swe_env.EnvironmentConfig.repo" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;name
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sweagent.environment.swe_env.EnvironmentConfig.post_startup_command_timeout" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;post_startup_command_timeout
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;repo
     </span>
   </a>
   
@@ -2076,9 +2067,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sweagent.environment.swe_env.EnvironmentConfig.repo" class="md-nav__link">
+  <a href="#sweagent.environment.swe_env.EnvironmentConfig.post_startup_command_timeout" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;repo
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;post_startup_command_timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.environment.swe_env.EnvironmentConfig.name" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;name
     </span>
   </a>
   
@@ -2300,18 +2300,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sweagent.environment.swe_env.EnvironmentConfig.name" class="md-nav__link">
+  <a href="#sweagent.environment.swe_env.EnvironmentConfig.repo" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;name
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sweagent.environment.swe_env.EnvironmentConfig.post_startup_command_timeout" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;post_startup_command_timeout
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;repo
     </span>
   </a>
   
@@ -2327,9 +2318,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sweagent.environment.swe_env.EnvironmentConfig.repo" class="md-nav__link">
+  <a href="#sweagent.environment.swe_env.EnvironmentConfig.post_startup_command_timeout" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;repo
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;post_startup_command_timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.environment.swe_env.EnvironmentConfig.name" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;name
     </span>
   </a>
   
@@ -2485,8 +2485,8 @@ To learn about the environment class itself, see the <a href="../env/">environme
 
 
 
-<h3 id="sweagent.environment.swe_env.EnvironmentConfig.name" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">name</span>
+<h3 id="sweagent.environment.swe_env.EnvironmentConfig.repo" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">repo</span>
 
 
   <span class="doc doc-labels">
@@ -2494,35 +2494,12 @@ To learn about the environment class itself, see the <a href="../env/">environme
   </span>
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">name</span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s1">&#39;main&#39;</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">repo</span><span class="p">:</span> <span class="n"><span title="sweagent.environment.repo.RepoConfig">RepoConfig</span></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
 
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="sweagent.environment.swe_env.EnvironmentConfig.post_startup_command_timeout" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">post_startup_command_timeout</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
-  </span>
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">post_startup_command_timeout</span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">=</span> <span class="mi">500</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Timeout for the post-startup commands.
-NOTE: The timeout applies to every command in <code>post_startup_commands</code> separately.</p>
+        <p>Repository options.</p>
 
     </div>
 
@@ -2558,8 +2535,8 @@ Note: Every command is passed as a string, not a list of arguments.</p>
 
 
 
-<h3 id="sweagent.environment.swe_env.EnvironmentConfig.repo" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">repo</span>
+<h3 id="sweagent.environment.swe_env.EnvironmentConfig.post_startup_command_timeout" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">post_startup_command_timeout</span>
 
 
   <span class="doc doc-labels">
@@ -2567,12 +2544,35 @@ Note: Every command is passed as a string, not a list of arguments.</p>
   </span>
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">repo</span><span class="p">:</span> <span class="n"><span title="sweagent.environment.repo.RepoConfig">RepoConfig</span></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">post_startup_command_timeout</span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">=</span> <span class="mi">500</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
 
-        <p>Repository options.</p>
+        <p>Timeout for the post-startup commands.
+NOTE: The timeout applies to every command in <code>post_startup_commands</code> separately.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.environment.swe_env.EnvironmentConfig.name" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">name</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">name</span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s1">&#39;main&#39;</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
 
     </div>
 

@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -1125,6 +1125,19 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Command line interface
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1136,6 +1149,52 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-swe-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running SWE-agent
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspecting runs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced scripts
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2182,6 +2241,41 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-swe-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running SWE-agent
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspecting runs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced scripts
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2208,15 +2302,23 @@
 <h1 id="swe-agent-command-line-interface">SWE-agent command line interface</h1>
 <p>All functionality of SWE-agent is available via the command line interface via the <code>sweagent</code> command.</p>
 <p>You can run <code>sweagent --help</code> to see all subcommands.</p>
-<p>Here's a quick overview:</p>
+<h2 id="running-swe-agent">Running SWE-agent</h2>
 <ul>
 <li><code>sweagent run</code>: Run SWE-agent on a single issue (<a href="../hello_world/">tutorial</a>).</li>
 <li><code>sweagent run-batch</code>: Run SWE-agent on a batch of issues (<a href="../batch_mode/">tutorial</a>).</li>
 <li><code>sweagent run-replay</code>: Replay a trajectory file or a demo file. This means that you take all actions from the trajectory and execute them again in the environment. Useful for debugging your <a href="../../config/tools/">tools</a> or for building new <a href="../../config/demonstrations/">demonstrations</a>.</li>
+</ul>
+<h2 id="inspecting-runs">Inspecting runs</h2>
+<ul>
 <li><code>sweagent inspect</code> or <code>sweagent i</code>: Open the command line inspector (<a href="../inspector/">more information</a>).</li>
 <li><code>sweagent inspector</code> or <code>sweagent I</code>: Open the web-based inspector (<a href="../inspector/">more information</a>).</li>
+<li><code>sweagent quick-stats</code> or <code>sweagent qs</code>: When executed in a directory with trajectories, displays a summary of <code>exit_status</code> and more</li>
+</ul>
+<h2 id="advanced-scripts">Advanced scripts</h2>
+<ul>
 <li><code>sweagent merge-preds</code>: Merge multiple prediction files into a single file.</li>
 <li><code>sweagent traj-to-demo</code>: Convert a trajectory file to an easy to edit demo file (<a href="../../config/demonstrations/">more information on demonstrations</a>).</li>
+<li><code>sweagent remove-unfinished</code>: Remove unfinished trajectories</li>
 </ul>
 
 

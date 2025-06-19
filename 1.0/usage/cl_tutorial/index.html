@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -2368,20 +2368,20 @@
 </div>
 <h2 id="a-few-examples">A few examples</h2>
 <p>Before we start with a more structured explanation of the command line options, here are a few examples that you might find immediately useful:</p>
-<div class="highlight"><span class="filename">Fix a github issue</span><pre><span></span><code>python<span class="w"> </span>run.py<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><span class="filename">Fix a github issue</span><pre><span></span><code>sweagent<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--agent.model.name<span class="o">=</span>gpt4<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--agent.model.per_instance_cost_limit<span class="o">=</span><span class="m">2</span>.00<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--env.repo.github_url<span class="o">=</span>https://github.com/SWE-agent/test-repo<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--problem_statement.github_url<span class="o">=</span>https://github.com/SWE-agent/test-repo/issues/1
 </code></pre></div>
-<div class="highlight"><span class="filename">Work on a github repo with a custom problem statement</span><pre><span></span><code>python<span class="w"> </span>run.py<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><span class="filename">Work on a github repo with a custom problem statement</span><pre><span></span><code>sweagent<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>...
 <span class="w">  </span>--env.repo.github_url<span class="o">=</span>https://github.com/SWE-agent/test-repo<span class="w"> </span><span class="se">\</span>
 <span class="hll"><span class="w">  </span>--problem_statement.text<span class="o">=</span><span class="s2">&quot;Hey, can you fix all the bugs?&quot;</span>
 </span></code></pre></div>
 <div class="highlight"><span class="filename">Fix a bug in a local repository using a custom docker image</span><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/SWE-agent/test-repo.git
-python<span class="w"> </span>run.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--agent.model.name<span class="o">=</span>claude-3.5<span class="w"> </span><span class="se">\</span>
+sweagent<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--agent.model.name<span class="o">=</span>claude-sonnet-4-20250514<span class="se">\</span>
 <span class="hll"><span class="w">  </span>--env.repo.path<span class="o">=</span>test-repo<span class="w"> </span><span class="se">\</span>
 </span><span class="hll"><span class="w">  </span>--problem_statement.path<span class="o">=</span>test-repo/problem_statements/1.md<span class="w"> </span><span class="se">\</span>
 </span><span class="hll"><span class="w">  </span>--env.deployment.image<span class="o">=</span>python:3.12
@@ -2392,21 +2392,21 @@ python<span class="w"> </span>run.py<span class="w"> </span><span class="se">\</
 </ol>
 <p>For the next example, we will use a cloud-based execution environment instead of using local docker containers.
 For this, you first need to set up a modal account, install the necessary extra dependencies <code>pip install 'swe-rex[modal]'</code>, then run:</p>
-<div class="highlight"><span class="filename">Deployment on modal (cloud-based execution)</span><pre><span></span><code>python<span class="w"> </span>run.py<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><span class="filename">Deployment on modal (cloud-based execution)</span><pre><span></span><code>sweagent<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>...
 <span class="hll"><span class="w">  </span>--env.deployment.type<span class="o">=</span>modal<span class="w"> </span><span class="se">\</span>
 </span><span class="w">  </span>--env.deployment.image<span class="o">=</span>python:3.12
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">All options</p>
-<p>Run <code>python run.py --help</code> to see all available options for <code>run.py</code>. This tutorial will only cover a subset of options.</p>
+<p>Run <code>sweagent run --help</code> to see all available options for <code>run.py</code>. This tutorial will only cover a subset of options.</p>
 </div>
 <h2 id="configuration-files">Configuration files</h2>
 <p>All configuration options can be specified either in one or more <code>.yaml</code> files, or as command line arguments. For example, our first command can be written as</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Command line</label><label for="__tabbed_1_2">Configuration file</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>run.py<span class="w"> </span>--config<span class="w"> </span>my_run.yaml
+<div class="highlight"><pre><span></span><code>sweagent<span class="w"> </span>run<span class="w"> </span>--config<span class="w"> </span>my_run.yaml
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -2427,7 +2427,8 @@ For this, you first need to set up a modal account, install the necessary extra 
 <div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Command line</label><label for="__tabbed_2_2"><code>agent.yaml</code></label><label for="__tabbed_2_3"><code>env.yaml</code></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>run.py<span class="w"> </span>--config<span class="w"> </span>agent.yaml<span class="w"> </span>--config<span class="w"> </span>env.yaml<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Note that you need --config in front of every config file</span>
+sweagent<span class="w"> </span>run<span class="w"> </span>--config<span class="w"> </span>agent.yaml<span class="w"> </span>--config<span class="w"> </span>env.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--problem_statement.text<span class="o">=</span><span class="s2">&quot;Hey, can you fix all the bugs?&quot;</span>
 </code></pre></div>
 </div>
@@ -2446,11 +2447,20 @@ For this, you first need to set up a modal account, install the necessary extra 
 </div>
 </div>
 </div>
-<p>The default config file is <code>config/anthropic_filemap.yaml</code>. Let's take a look at it:</p>
+<div class="admonition warning">
+<p class="admonition-title">Multiple config files</p>
+<p>Prior to version SWE-agent 1.1.0, configs were merged with simple dictionary updates,
+rather than a hierarchical merge, so specifying <code>agent</code> (or any key with subkeys) in the
+second config would completely overwrite all <code>agent</code> settings of the first config.
+This is fixed since SWE-agent 1.1.0.</p>
+</div>
+<p>The default config file is <code>config/default.yaml</code>. Let's take a look at it:</p>
 <details>
-<summary>Example: default config <code>anthropic_filemap.yaml</code></summary>
+<summary>Example: default config <code>default.yaml</code></summary>
 
-<div class="highlight"><pre><span></span><code><span class="c1"># This template is heavily inspired by anthropic&#39;s computer use demo</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Formerly called: anthropic_filemap.yaml</span>
+<span class="c1"># This template is heavily inspired by anthropic&#39;s computer use demo, but you can use</span>
+<span class="c1"># it with any LM.</span>
 <span class="nt">agent</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">templates</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">system_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
@@ -2481,6 +2491,13 @@ For this, you first need to set up a modal account, install the necessary extra 
 <span class="w">    </span><span class="nt">next_step_no_output_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
 <span class="w">      </span><span class="no">Your command ran successfully and did not produce any output.</span>
 <span class="w">  </span><span class="nt">tools</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">env_variables</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">PAGER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cat</span>
+<span class="w">      </span><span class="nt">MANPAGER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cat</span>
+<span class="w">      </span><span class="nt">LESS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-R</span>
+<span class="w">      </span><span class="nt">PIP_PROGRESS_BAR</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;off&#39;</span>
+<span class="w">      </span><span class="nt">TQDM_DISABLE</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+<span class="w">      </span><span class="nt">GIT_PAGER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cat</span>
 <span class="w">    </span><span class="nt">bundles</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tools/registry</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tools/edit_anthropic</span>
@@ -2516,7 +2533,7 @@ For this, you first need to set up a modal account, install the necessary extra 
 <p>As you can see, this is where all the templates are defined!</p>
 <p>This file is also loaded when no other <code>--config</code> options are specified.
 So to make sure that we get the default templates in the above examples with <code>--config</code>, we should have added</p>
-<div class="highlight"><pre><span></span><code>--config<span class="w"> </span>config/anthropic_filemap.yaml
+<div class="highlight"><pre><span></span><code>--config<span class="w"> </span>config/default.yaml
 </code></pre></div>
 <p>in addition to all the other <code>--config</code> options for the two examples above.</p>
 <h2 id="problem-statements-and-union-types">Problem statements and union types <a id="union-types"></a></h2>

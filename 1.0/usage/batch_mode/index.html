@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -2369,7 +2369,7 @@
 <p>So you've decided to run SWE-agent on a lot of issues in parallel. Great, the <code>run-batch</code> command is exactly here for that.
 Let's run on three <a href="https://www.swebench.com/">SWE-bench</a> issues which will be downloaded automatically.</p>
 <div class="highlight"><pre><span></span><code>sweagent<span class="w"> </span>run-batch<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--config<span class="w"> </span>config/anthropic_filemap.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>config/default.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--agent.model.name<span class="w"> </span>gpt-4o<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--agent.model.per_instance_cost_limit<span class="w"> </span><span class="m">2</span>.00<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--instances.type<span class="w"> </span>swe_bench<span class="w"> </span><span class="se">\</span>
@@ -2414,7 +2414,7 @@ This will already submit submissions to <code>sb-cli</code> while you are runnin
 <h2 id="running-in-parallel">Running in parallel</h2>
 <p>Let's speed things up and run on 5 instances at once. Only a single line to change:</p>
 <div class="highlight"><pre><span></span><code>sweagent<span class="w"> </span>run-batch<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--config<span class="w"> </span>config/anthropic_filemap.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>config/default.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--agent.model.name<span class="w"> </span>gpt-4o<span class="w"> </span><span class="se">\</span>
 <span class="hll"><span class="w">    </span>--num_workers<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
 </span><span class="w">    </span>--agent.model.per_instance_cost_limit<span class="w"> </span><span class="m">2</span>.00<span class="w"> </span><span class="se">\</span>
@@ -2440,7 +2440,7 @@ In this case, please set <code>--random_delay_multiplier</code> to e.g., 1. This
 thereby easing CPU pressure. Default is 0.3.</p>
 <h2 id="loading-instances-from-a-file">Loading instances from a file</h2>
 <div class="highlight"><pre><span></span><code>sweagent<span class="w"> </span>run-batch<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--config<span class="w"> </span>config/anthropic_filemap.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>config/default.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--agent.model.name<span class="w"> </span>gpt-4o<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--instances.type<span class="w"> </span>file<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--instances.path<span class="w"> </span>instances.yaml<span class="w"> </span><span class="se">\</span>

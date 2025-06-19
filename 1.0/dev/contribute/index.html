@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -2452,6 +2452,10 @@ Run them with</p>
 <li>Note the <code>--</code> before the options passed to sweagent. This is to separate
   options passed to <code>pdb</code> from those that are passed to <code>sweagent</code>.</li>
 </ol>
+<p>When working on a test that fails, you can use</p>
+<div class="highlight"><pre><span></span><code>pytest -k name_of_test -s --capture=no --log-cli-level=DEBUG
+</code></pre></div>
+<p>to see all debug output from the agent.</p>
 <h2 id="tips-for-pull-requests">Tips for pull requests</h2>
 <ul>
 <li>If you see a lot of formatting-related merge conflicts, please see <a href="../formatting_conflicts/">here</a>.</li>

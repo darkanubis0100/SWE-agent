@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -2227,7 +2227,7 @@ The most important ones are</p>
 <p>In this tutorial, we will focus on the <code>run</code> subcommand.</p>
 <p>Let's start with an absolutely trivial example and solve an issue about a simple syntax error (<a href="https://github.com/SWE-agent/test-repo/issues/1"><code>swe-agent/test-repo #1</code></a>)</p>
 <div class="highlight"><pre><span></span><code>sweagent<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--agent.model.name<span class="o">=</span>claude-3-7-sonnet-latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--agent.model.name<span class="o">=</span>claude-sonnet-4-20250514<span class="o">)</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--agent.model.per_instance_cost_limit<span class="o">=</span><span class="m">2</span>.00<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--env.repo.github_url<span class="o">=</span>https://github.com/SWE-agent/test-repo<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--problem_statement.github_url<span class="o">=</span>https://github.com/SWE-agent/test-repo/issues/1

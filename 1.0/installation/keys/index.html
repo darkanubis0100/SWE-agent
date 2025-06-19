@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -655,6 +655,21 @@
       Using local models
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Using local models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-model-registry-for-cost-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom model registry for cost tracking
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2292,6 +2307,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Using local models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-model-registry-for-cost-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom model registry for cost tracking
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2368,6 +2398,10 @@
 </div>
 <h2 id="supported-api-models">Supported API models</h2>
 <p>We support all models supported by <a href="https://github.com/BerriAI/litellm">litellm</a>, see their list <a href="https://docs.litellm.ai/docs/providers">here</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Custom model registries</p>
+<p>If you're using a model that's not in the default litellm model registry (e.g., custom local models or new models), you can provide a custom model registry file using the <code>litellm_model_registry</code> configuration option. This allows proper cost tracking for any model. See the <a href="#custom-model-registry-for-cost-tracking">custom model registry section</a> below for details.</p>
+</div>
 <p>Here are a few options for <code>--agent.model.name</code>:</p>
 <table>
 <thead>
@@ -2379,7 +2413,7 @@
 </thead>
 <tbody>
 <tr>
-<td><code>claude-3-7-sonnet-latest</code></td>
+<td><code>claude-sonnet-4-20250514)</code></td>
 <td><code>ANTHROPIC_API_KEY</code></td>
 <td>Our recommended model</td>
 </tr>
@@ -2448,10 +2482,48 @@ for local models.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Cost/token limits</p>
-<p>If you do not disable the default cost limits, you will see an error because the cost calculator will not be able to find the model in the <code>litellm</code> model cost dictionary.
-Please make sure to the set the <code>per_instance_cost_limit</code> to 0 and use the <code>per_instance_call_limit</code> instead to limit the runtime per issue.
-Please also make sure to set <code>max_input_tokens</code> to a non-<code>None</code> value to avoid a lot of warnings.</p>
+<p>If you do not disable the default cost limits, you will see an error because the cost calculator will not be able to find the model in the <code>litellm</code> model cost dictionary.</p>
+<p>You have two options:</p>
+<ol>
+<li><strong>Disable cost tracking</strong> (recommended for most users): Set <code>per_instance_cost_limit</code> to 0 and use the <code>per_instance_call_limit</code> instead to limit the runtime per issue.</li>
+<li><strong>Use a custom model registry</strong>: If you want to track costs for your local model, you can provide a custom <code>litellm_model_registry</code> file with cost information for your model (see below).</li>
+</ol>
+<p>Please also make sure to set <code>max_input_tokens</code> to a non-<code>None</code> value to avoid other warnings.</p>
 </div>
+<h3 id="custom-model-registry-for-cost-tracking">Custom model registry for cost tracking</h3>
+<p>If you want to track costs for models not in the default litellm registry, you can provide a custom model registry file. This is particularly useful for:</p>
+<ul>
+<li>New models not yet supported by litellm's default registry</li>
+<li>Overriding default / old cost values in litellm</li>
+<li>Local models that you want to track "costs" for, to compare to other results</li>
+</ul>
+<p>This file will override entries in the <a href="https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json">litellm community model cost file</a>.</p>
+<p>Create a JSON file with your model's cost information following the litellm model registry format:</p>
+<div class="highlight"><span class="filename">my_model_registry.json</span><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;ollama/llama2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;max_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8192</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;input_cost_per_token&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00002</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;output_cost_per_token&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00006</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;litellm_provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;mode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;chat&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;my-custom-provider/my-new-model&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;max_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8192</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_input_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8192</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_output_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8192</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;input_cost_per_token&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.000001</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;output_cost_per_token&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.000002</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;litellm_provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;openai&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;mode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;chat&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Then specify this registry in your config:</p>
+<div class="highlight"><span class="filename">config/your_config.yaml</span><pre><span></span><code><span class="nt">agent</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">litellm_model_registry</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_model_registry.json&quot;</span><span class="w">  </span><span class="c1"># Path to your custom registry</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Parsing functions</p>
 <p>The default config uses function calling to retrieve actions from the model response, i.e.,

@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -2383,6 +2383,9 @@
 <h3 id="local-models">Local models</h3>
 <p>See <a href="../../installation/keys/">the model section</a> in the installation guide.
 Remember to unset spending limits and configure the action parser if you cannot support function calling.</p>
+<p>For "cost" tracking with local models, you can optionally provide a custom <code>litellm_model_registry</code> file in your configuration.
+This allows you to define custom pricing information for your local models instead of disabling cost limits entirely.
+See the <a href="../../installation/keys/#custom-model-registry-for-cost-tracking">local models section</a> for detailed instructions.</p>
 <h3 id="anthropic-claude">Anthropic Claude</h3>
 <p>Prompt caching makes SWE-agent several times more affordable. While this is done automatically for models like <code>gpt-4o</code>,
 care has to be taken for Anthropic Claude, as you need to manually set the cache break points.</p>
@@ -2406,7 +2409,7 @@ To support more parallel running instances, supply multiple keys as described be
 <p>We recommend that you check how often you hit the cache. A very simple way is to go to your trajectory directory and grep like so:</p>
 <div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;cached_tokens=[0-9]*&quot;</span><span class="w"> </span>django__django-11299.debug.log
 </code></pre></div>
-<p>Note that the maximum number of output tokens of Claude 3.7 can be extended with extra headers.
+<p>Note that the maximum number of output tokens of Claude 3.7/4 can be extended with extra headers.
 See <a href="https://github.com/BerriAI/litellm/issues/8984">this issue in litellm</a> and and <a href="https://github.com/SWE-agent/SWE-agent/issues/1035">swe-agent PR #1035</a>
 for omore information.
 Since <a href="https://github.com/SWE-agent/SWE-agent/pull/1036">#1036</a> you can also manually set the maximum output tokens and override the information
